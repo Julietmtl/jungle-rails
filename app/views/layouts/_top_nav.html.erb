@@ -45,8 +45,7 @@
         </li>
         <% if current_user %>
         <li>
-        Signed in as
-         <%= current_user.first_name %> |
+        <a>Signed in as&nbsp<%= current_user.first_name %></a>
         </li>
         <li>
         <%= link_to 'Log out', :logout %>
