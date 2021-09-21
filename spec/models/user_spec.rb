@@ -58,7 +58,26 @@ RSpec.describe User, type: :model do
   end
 
   describe '.authenticate_with_credentials' do
-    it "should allow users to login if they have the correct email and password"
-  end
+    before do 
+      @user = User.new(first_name: "First", last_name: "Last", email: "test@test.com", password: "password1", password_confirmation: "password1")
+    end
 
+    it 'should allow users to login if they have the correct email and password' do
+      @user.save
+      user1 = User.authenticate_with_credentials('test@test.com', 'password1')
+      expect(@user).to be == user1
+    end
+
+    it 'should pass even if email has spaces present in email' do
+      @user.save
+      user1 = User.authenticate_with_credentials('   test@test.com', 'password1')
+      expect(@user).to be == user1
+    end
+
+    it 'should pass even if email has capital letters' do
+      @user.save
+      user1 = User.authenticate_with_credentials('TEST@test.com', 'password1')
+      expect(@user).to be == user1
+    end
+  end
 end
