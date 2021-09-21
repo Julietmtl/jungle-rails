@@ -79,5 +79,17 @@ RSpec.describe User, type: :model do
       user1 = User.authenticate_with_credentials('TEST@test.com', 'password1')
       expect(@user).to be == user1
     end
+
+    it 'should fail if email does not exist in database' do
+      @user.save
+      user1 = User.authenticate_with_credentials('t@test.com', 'password1')
+      expect(user1).to be == nil
+    end
+
+    it 'should fail if password does not match with email in database' do
+      @user.save
+      user1 = User.authenticate_with_credentials('test@test.com', 'fakepassword')
+      expect(user1).to be == false
+    end
   end
 end
